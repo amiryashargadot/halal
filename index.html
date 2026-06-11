@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>כספת החלל</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      color: white;
+      background:
+        radial-gradient(circle at 20% 30%, white 1px, transparent 2px),
+        radial-gradient(circle at 70% 20%, white 1px, transparent 2px),
+        radial-gradient(circle at 40% 80%, white 1px, transparent 2px),
+        radial-gradient(circle at 90% 70%, white 1px, transparent 2px),
+        linear-gradient(135deg, #050816, #111b3d, #241142);
+      background-size: 220px 220px, 300px 300px, 260px 260px, 340px 340px, cover;
+      overflow: hidden;
+    }
+
+    .game {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 42px;
+      text-shadow: 0 0 15px #8ab4ff;
+    }
+
+    .safe {
+      width: 260px;
+      height: 260px;
+      margin: 0 auto 25px;
+      position: relative;
+      perspective: 900px;
+    }
+
+    .safe-body {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #777, #222);
+      border: 8px solid #999;
+      box-shadow:
+        0 0 35px rgba(130, 180, 255, 0.6),
+        inset 0 0 20px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+
+    .safe-door {
+      position: absolute;
+      inset: 18px;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #555, #111);
+      border: 6px solid #aaa;
+      transform-origin: left center;
+      transition: transform 1s ease;
+      z-index: 2;
+    }
+
+    .safe.open .safe-door {
+      transform: rotateY(-115deg);
+    }
+
+    .handle {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: 10px solid #cfcfcf;
+      position: absolute;
+      top: 78px;
+      left: 82px;
+      box-shadow: inset 0 0 12px black;
+    }
+
+    .handle::before,
+    .handle::after {
+      content: "";
+      position: absolute;
+      background: #cfcfcf;
+      border-radius: 10px;
+    }
+
+    .handle::before {
+      width: 95px;
+      height: 10px;
+      top: 23px;
+      left: -20px;
+    }
+
+    .handle::after {
+      width: 10px;
+      height: 95px;
+      top: -20px;
+      left: 23px;
+    }
+
+    .inside {
+      position: absolute;
+      inset: 34px;
+      border-radius: 16px;
+      background: radial-gradient(circle, #ffe98a, #c87900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      z-index: 1;
+      box-shadow: inset 0 0 30px #000;
+    }
+
+    input {
+      width: 150px;
+      padding: 14px;
+      font-size: 28px;
+      text-align: center;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      letter-spacing: 8px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 28px;
+      font-size: 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #ffd166;
+      color: #111;
+      font-weight: bold;
+      box-shadow: 0 0 18px rgba(255, 209, 102, 0.8);
+    }
+
+    button:hover {
+      background: #ffbd2e;
+    }
+
+    .message {
+      height: 28px;
+      margin-top: 14px;
+      font-size: 20px;
+      color: #ff7777;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="game">
+    <h1>כספת החלל</h1>
+
+    <div class="safe" id="safe">
+      <div class="safe-body">
+        <div class="inside">⭐</div>
+        <div class="safe-door">
+          <div class="handle"></div>
+        </div>
+      </div>
+    </div>
+
+    <input
+      id="codeInput"
+      type="password"
+      maxlength="4"
+      inputmode="numeric"
+      placeholder="----"
+    />
+
+    <br />
+
+    <button onclick="checkCode()">פתח כספת</button>
+
+    <div class="message" id="message"></div>
+  </main>
+
+  <script>
+    const correctCode = "1234"; // כאן מחליפים לקוד הרצוי
+
+    function checkCode() {
+      const input = document.getElementById("codeInput");
+      const safe = document.getElementById("safe");
+      const message = document.getElementById("message");
+
+      if (input.value === correctCode) {
+        safe.classList.add("open");
+        message.textContent = "";
+
+        setTimeout(() => {
+          alert("כל הכבוד!");
+        }, 700);
+      } else {
+        message.textContent = "הקוד לא נכון. נסה שוב.";
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    document.getElementById("codeInput").addEventListener("input", function () {
+      this.value = this.value.replace(/\D/g, "").slice(0, 4);
+    });
+
+    document.getElementById("codeInput").addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        checkCode();
+      }
+    });
+  </script>
+</body>
+</html>
