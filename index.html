@@ -13,192 +13,99 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #111;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Arial", sans-serif;
-      color: #111;
-    }
-
-    .board {
-      position: relative;
-      width: min(1180px, 96vw);
-      aspect-ratio: 16 / 9;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(0,0,0,0.06) 0 1px, transparent 1.5px),
-        radial-gradient(circle at 70% 80%, rgba(0,0,0,0.045) 0 1px, transparent 1.5px),
-        #f7f7f2;
-      background-size: 24px 24px, 31px 31px, cover;
-      border: 3px solid #111;
+      background: #ffffff;
+      font-family: Arial, sans-serif;
       overflow: hidden;
-      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
     }
 
-    .map-lines {
+    .page {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+    }
+
+    .bg {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none;
     }
 
-    .content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-    }
-
-    h1 {
+    .center {
       position: absolute;
-      top: 22px;
-      right: 42px;
-      margin: 0;
-      font-size: clamp(30px, 4vw, 48px);
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .intro {
-      position: absolute;
-      top: 82px;
-      right: 42px;
-      width: 390px;
-      font-size: 16px;
-      line-height: 1.45;
-      text-align: right;
-    }
-
-    .planet-row {
-      position: absolute;
-      top: 175px;
-      right: 48px;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      direction: rtl;
-    }
-
-    .planet-box {
-      text-align: center;
-      font-size: 13px;
-    }
-
-    .planet {
-      width: 58px;
-      height: 58px;
-      border: 2px solid #111;
-      border-radius: 50%;
-      position: relative;
-      margin-bottom: 5px;
-      background:
-        repeating-radial-gradient(circle at 30% 35%, transparent 0 6px, rgba(0,0,0,0.18) 7px 8px),
-        #f7f7f2;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
-      font-weight: 900;
+      z-index: 2;
+      pointer-events: none;
     }
 
-    .planet.saturn::after {
-      content: "";
-      position: absolute;
-      width: 84px;
-      height: 22px;
-      border: 2px solid #111;
-      border-radius: 50%;
-      transform: rotate(-18deg);
-      background: transparent;
-    }
-
-    .dash-code {
-      position: absolute;
-      top: 287px;
-      right: 90px;
+    .safe-wrap {
+      pointer-events: auto;
       display: flex;
-      gap: 16px;
-      direction: ltr;
-    }
-
-    .dash-code span {
-      width: 52px;
-      border-bottom: 3px solid #111;
-      height: 18px;
-    }
-
-    .safe-zone {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -38%);
-      text-align: center;
-      width: 330px;
-    }
-
-    .safe-title {
-      font-weight: 900;
-      font-size: 20px;
-      margin-bottom: 12px;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
     }
 
     .safe {
-      width: 215px;
-      height: 215px;
-      margin: 0 auto 18px;
+      width: 260px;
+      height: 260px;
       position: relative;
-      perspective: 900px;
-      filter: drop-shadow(0 10px 8px rgba(0,0,0,0.14));
+      perspective: 1000px;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.16));
     }
 
     .safe-body {
       width: 100%;
       height: 100%;
+      position: relative;
       border: 4px solid #111;
-      border-radius: 18px;
+      border-radius: 22px;
       background:
         linear-gradient(135deg, transparent 0 47%, rgba(0,0,0,0.08) 48% 52%, transparent 53%),
-        #f7f7f2;
-      position: relative;
+        #f8f8f8;
     }
 
     .inside {
       position: absolute;
-      inset: 28px;
+      inset: 32px;
       border: 3px dashed #111;
-      border-radius: 12px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 46px;
+      font-size: 48px;
       z-index: 1;
+      background: #fffdf5;
     }
 
     .door {
       position: absolute;
-      inset: 17px;
+      inset: 18px;
       border: 4px solid #111;
-      border-radius: 13px;
-      background: #f7f7f2;
+      border-radius: 14px;
+      background: #fafafa;
       transform-origin: left center;
       transition: transform 0.9s cubic-bezier(.2,.9,.2,1);
       z-index: 2;
     }
 
     .safe.open .door {
-      transform: rotateY(-116deg);
+      transform: rotateY(-118deg);
     }
 
     .handle {
       position: absolute;
-      width: 72px;
-      height: 72px;
+      width: 78px;
+      height: 78px;
       border: 5px solid #111;
       border-radius: 50%;
-      top: 52px;
-      left: 52px;
+      top: 58px;
+      left: 58px;
     }
 
     .handle::before,
@@ -210,176 +117,70 @@
     }
 
     .handle::before {
-      width: 92px;
+      width: 98px;
       height: 5px;
-      top: 29px;
+      top: 31px;
       left: -15px;
     }
 
     .handle::after {
       width: 5px;
-      height: 92px;
+      height: 98px;
       top: -15px;
-      left: 29px;
+      left: 31px;
     }
 
     .panel {
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 10px;
       direction: ltr;
-      align-items: center;
     }
 
     input {
-      width: 142px;
+      width: 150px;
       height: 50px;
       border: 2px solid #111;
-      background: #f7f7f2;
-      border-radius: 0;
+      background: #fff;
       font-size: 28px;
       letter-spacing: 8px;
       text-align: center;
       outline: none;
-      font-weight: 900;
+      font-weight: 700;
       font-family: "Courier New", monospace;
     }
 
     input:focus {
-      box-shadow: 4px 4px 0 #111;
+      box-shadow: 5px 5px 0 #111;
     }
 
     button {
       height: 50px;
       padding: 0 20px;
-      background: #111;
-      color: #f7f7f2;
       border: 2px solid #111;
+      background: #111;
+      color: #fff;
       font-size: 18px;
-      font-weight: 900;
+      font-weight: 700;
       cursor: pointer;
     }
 
     button:hover {
-      background: #f7f7f2;
+      background: #fff;
       color: #111;
     }
 
     .msg {
-      height: 24px;
-      margin-top: 10px;
+      min-height: 24px;
       font-size: 16px;
-      font-weight: 900;
-    }
-
-    .note {
-      position: absolute;
-      width: 210px;
-      font-size: 15px;
-      line-height: 1.35;
-      text-align: center;
-      transform-origin: center;
-    }
-
-    .note::before,
-    .note::after {
-      content: "";
-      display: block;
-      height: 1px;
-      background: #111;
-      margin: 8px 0;
-    }
-
-    .note.one {
-      top: 95px;
-      left: 130px;
-      transform: rotate(-13deg);
-    }
-
-    .note.two {
-      bottom: 120px;
-      left: 85px;
-      transform: rotate(11deg);
-    }
-
-    .note.three {
-      bottom: 96px;
-      right: 305px;
-      transform: rotate(-5deg);
-      width: 250px;
-    }
-
-    .note.four {
-      top: 330px;
-      right: 70px;
-      width: 320px;
-      transform: rotate(0deg);
-      text-align: right;
-    }
-
-    .tiny-label {
-      position: absolute;
-      font-size: 13px;
       font-weight: 700;
-      transform: rotate(-90deg);
-      opacity: 0.9;
-    }
-
-    .tiny-label.a {
-      left: 35px;
-      top: 280px;
-    }
-
-    .tiny-label.b {
-      right: 500px;
-      top: 95px;
-      transform: rotate(8deg);
-    }
-
-    .paper {
-      position: absolute;
-      right: 145px;
-      bottom: 54px;
-      width: 145px;
-      height: 170px;
-      background: #f7f7f2;
-      border: 1px solid #111;
-      transform: rotate(13deg);
-      box-shadow: 18px 18px 28px rgba(0,0,0,0.22);
-      padding: 18px 12px;
-      font-size: 13px;
-    }
-
-    .paper table {
-      width: 100%;
-      border-collapse: collapse;
-      direction: ltr;
-    }
-
-    .paper td {
-      border: 1px solid #111;
-      height: 28px;
+      color: #b91c1c;
       text-align: center;
     }
-
-    .constellation {
-      position: absolute;
-      width: 150px;
-      height: 110px;
-    }
-
-    .constellation svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .c1 { left: 20px; top: 18px; }
-    .c2 { left: 185px; bottom: 75px; transform: rotate(8deg); }
-    .c3 { right: 18px; bottom: 120px; transform: rotate(-14deg); }
-    .c4 { left: 690px; bottom: 225px; transform: rotate(26deg); }
 
     .shake {
-      animation: shake 0.33s ease;
+      animation: shake 0.32s ease;
     }
 
     @keyframes shake {
@@ -395,8 +196,8 @@
       display: none;
       align-items: center;
       justify-content: center;
+      background: rgba(255,255,255,0.75);
       z-index: 10;
-      background: rgba(0,0,0,0.48);
     }
 
     .popup.show {
@@ -404,118 +205,102 @@
     }
 
     .popup-box {
-      background: #f7f7f2;
+      background: #fff;
       border: 3px solid #111;
-      width: min(380px, 88vw);
-      padding: 34px 26px;
+      padding: 28px 34px;
+      box-shadow: 10px 10px 0 #111;
       text-align: center;
-      box-shadow: 12px 12px 0 #111;
-      animation: pop 0.25s ease;
     }
 
     .popup-box h2 {
       margin: 0;
-      font-size: 46px;
+      font-size: 42px;
+      color: #111;
     }
 
-    .popup-box p {
-      margin: 12px 0 0;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    @keyframes pop {
-      from { transform: scale(0.88) rotate(-2deg); opacity: 0; }
-      to { transform: scale(1) rotate(0); opacity: 1; }
-    }
-
-    @media (max-width: 800px) {
-      body {
-        align-items: flex-start;
-        background: #f7f7f2;
-      }
-
-      .board {
-        width: 100vw;
-        min-height: 100vh;
-        aspect-ratio: auto;
-        border: none;
-      }
-
-      h1 {
-        right: 22px;
-        top: 18px;
-      }
-
-      .intro {
-        right: 22px;
-        top: 70px;
-        width: calc(100% - 44px);
-      }
-
-      .planet-row,
-      .dash-code,
-      .note,
-      .paper,
-      .tiny-label,
-      .constellation {
-        display: none;
-      }
-
-      .safe-zone {
-        top: 58%;
-        width: 92%;
-      }
-
+    @media (max-width: 640px) {
       .safe {
-        width: 230px;
-        height: 230px;
+        width: 220px;
+        height: 220px;
+      }
+
+      .handle {
+        width: 66px;
+        height: 66px;
+        top: 50px;
+        left: 50px;
+      }
+
+      .handle::before {
+        width: 84px;
+        top: 26px;
+        left: -14px;
+      }
+
+      .handle::after {
+        height: 84px;
+        top: -14px;
+        left: 26px;
+      }
+
+      .panel {
+        flex-direction: column;
       }
     }
   </style>
 </head>
-
 <body>
-  <main class="board">
-    <svg class="map-lines" viewBox="0 0 1180 664" preserveAspectRatio="none">
-      <defs>
-        <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
-          <polygon points="0 0, 8 3.5, 0 7" fill="#111"></polygon>
-        </marker>
-      </defs>
+  <div class="page">
 
-      <path d="M80 500 C120 420, 160 420, 185 345 S250 250, 320 270" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M245 95 C330 60, 415 52, 505 70" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M720 85 C840 100, 780 205, 695 190 S590 200, 570 260" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M820 365 C900 335, 960 375, 910 450" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M405 555 C520 515, 575 565, 680 515" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M1010 510 C965 520, 930 545, 895 590" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M545 398 C600 415, 620 455, 610 505" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
-      <path d="M330 430 C290 455, 265 485, 270 530" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+    <svg class="bg" viewBox="0 0 1600 900" preserveAspectRatio="none">
+      <rect width="1600" height="900" fill="white"/>
+
+      <g stroke="#8aa0b8" stroke-width="1.3" fill="none">
+        <polyline points="35,42 70,22 124,48 180,30 232,56" />
+        <polyline points="140,680 180,632 225,664 280,642 346,690" />
+        <polyline points="1180,88 1228,60 1286,110 1330,94 1388,148" />
+        <polyline points="1338,722 1390,678 1440,712 1496,690 1540,736" />
+        <polyline points="240,274 300,235 342,274 396,252 452,288 510,260" />
+        <polyline points="1058,272 1120,232 1168,286 1216,254 1276,305" />
+        <polyline points="525,770 585,730 655,754 716,726 778,764" />
+        <polyline points="890,585 940,532 1006,578 1070,544 1130,606" />
+        <polyline points="80,370 122,408 174,384 228,430 282,402" />
+        <polyline points="1460,350 1506,310 1552,344 1584,326" />
+      </g>
+
+      <g fill="#111">
+        <circle cx="35" cy="42" r="5"/><circle cx="70" cy="22" r="5"/><circle cx="124" cy="48" r="5"/><circle cx="180" cy="30" r="5"/><circle cx="232" cy="56" r="5"/>
+        <circle cx="140" cy="680" r="5"/><circle cx="180" cy="632" r="5"/><circle cx="225" cy="664" r="5"/><circle cx="280" cy="642" r="5"/><circle cx="346" cy="690" r="5"/>
+        <circle cx="1180" cy="88" r="5"/><circle cx="1228" cy="60" r="5"/><circle cx="1286" cy="110" r="5"/><circle cx="1330" cy="94" r="5"/><circle cx="1388" cy="148" r="5"/>
+        <circle cx="1338" cy="722" r="5"/><circle cx="1390" cy="678" r="5"/><circle cx="1440" cy="712" r="5"/><circle cx="1496" cy="690" r="5"/><circle cx="1540" cy="736" r="5"/>
+        <circle cx="240" cy="274" r="5"/><circle cx="300" cy="235" r="5"/><circle cx="342" cy="274" r="5"/><circle cx="396" cy="252" r="5"/><circle cx="452" cy="288" r="5"/><circle cx="510" cy="260" r="5"/>
+        <circle cx="1058" cy="272" r="5"/><circle cx="1120" cy="232" r="5"/><circle cx="1168" cy="286" r="5"/><circle cx="1216" cy="254" r="5"/><circle cx="1276" cy="305" r="5"/>
+        <circle cx="525" cy="770" r="5"/><circle cx="585" cy="730" r="5"/><circle cx="655" cy="754" r="5"/><circle cx="716" cy="726" r="5"/><circle cx="778" cy="764" r="5"/>
+        <circle cx="890" cy="585" r="5"/><circle cx="940" cy="532" r="5"/><circle cx="1006" cy="578" r="5"/><circle cx="1070" cy="544" r="5"/><circle cx="1130" cy="606" r="5"/>
+        <circle cx="80" cy="370" r="5"/><circle cx="122" cy="408" r="5"/><circle cx="174" cy="384" r="5"/><circle cx="228" cy="430" r="5"/><circle cx="282" cy="402" r="5"/>
+        <circle cx="1460" cy="350" r="5"/><circle cx="1506" cy="310" r="5"/><circle cx="1552" cy="344" r="5"/><circle cx="1584" cy="326" r="5"/>
+      </g>
+
+      <g stroke="#111" stroke-width="2" fill="none" stroke-linecap="round">
+        <path d="M58 110 C40 170, 40 215, 74 258" />
+        <path d="M202 78 C280 56, 350 45, 432 42" />
+        <path d="M1090 64 C1025 108, 1006 166, 1028 236" />
+        <path d="M1420 108 C1490 132, 1534 180, 1520 238" />
+        <path d="M76 540 C92 482, 124 452, 176 438" />
+        <path d="M300 816 C366 780, 436 772, 512 792" />
+        <path d="M1248 804 C1314 764, 1394 754, 1464 786" />
+        <path d="M1456 472 C1512 502, 1540 558, 1530 628" />
+        <path d="M938 146 C892 184, 862 224, 846 274" />
+        <path d="M658 104 C724 124, 782 154, 834 198" />
+        <path d="M560 658 C622 628, 698 620, 768 640" />
+        <path d="M844 746 C900 704, 960 692, 1030 706" />
+        <path d="M344 124 C326 188, 334 242, 376 284" />
+        <path d="M118 274 C174 250, 208 212, 222 164" />
+      </g>
     </svg>
 
-    <section class="content">
-      <h1>התחל כאן</h1>
-
-      <p class="intro">
-        אחרי רגע מתחת לכוכבים, מצאו את ארבע הספרות הנכונות.
-        הזינו אותן בכספת. אם הקוד מדויק — הדלת תיפתח.
-      </p>
-
-      <div class="planet-row">
-        <div class="planet-box"><div class="planet">ח</div><span>ארץ</span></div>
-        <div class="planet-box"><div class="planet">מ</div><span>מאדים</span></div>
-        <div class="planet-box"><div class="planet">נ</div><span>נוגה</span></div>
-        <div class="planet-box"><div class="planet saturn">ש</div><span>שבתאי</span></div>
-      </div>
-
-      <div class="dash-code">
-        <span></span><span></span><span></span><span></span>
-      </div>
-
-      <div class="safe-zone">
-        <div class="safe-title">כספת המשימה</div>
-
+    <div class="center">
+      <div class="safe-wrap">
         <div class="safe" id="safe">
           <div class="safe-body">
             <div class="inside">★</div>
@@ -526,81 +311,18 @@
         </div>
 
         <div class="panel">
-          <input id="codeInput" type="text" maxlength="4" inputmode="numeric" placeholder="----">
+          <input id="codeInput" type="password" maxlength="4" inputmode="numeric" placeholder="----">
           <button onclick="checkCode()">פתח</button>
         </div>
 
         <div class="msg" id="msg"></div>
       </div>
-
-      <div class="note one">
-        קווים מחברים בין נקודות. לפעמים גם בין רעיונות.
-        אל תאמינו לכל חץ — אבל שימו לב לכיוון.
-      </div>
-
-      <div class="note two">
-        כוכב הלכת שנמצא במקום ה־7 מהשמש אינו הקוד, אבל הוא רמז טוב להתחלה.
-      </div>
-
-      <div class="note three">
-        אם בטבלה הופיע גם כוכב הלכת המסתורי — מה המספר שהיה מופיע לידו?
-      </div>
-
-      <div class="note four">
-        אחרי שאיתרתם את ארבע הספרות, הזינו אותן כאן.
-        הכספת תיפתח רק אם הסדר נכון.
-      </div>
-
-      <div class="tiny-label a">לא כל נקודה היא התחלה</div>
-      <div class="tiny-label b">מסלול הכוכבים משתנה, הקוד נשאר</div>
-
-      <div class="paper">
-        <table>
-          <tr><td>7</td><td>אורנוס</td></tr>
-          <tr><td>8</td><td>נפטון</td></tr>
-          <tr><td>7</td><td>רמז</td></tr>
-          <tr><td>3</td><td>סיום</td></tr>
-        </table>
-      </div>
-
-      <div class="constellation c1">
-        <svg viewBox="0 0 150 110">
-          <polyline points="10,20 42,10 82,32 125,18" fill="none" stroke="#15325c" stroke-width="1"/>
-          <circle cx="10" cy="20" r="4" fill="#111"/><circle cx="42" cy="10" r="4" fill="#111"/>
-          <circle cx="82" cy="32" r="4" fill="#111"/><circle cx="125" cy="18" r="4" fill="#111"/>
-        </svg>
-      </div>
-
-      <div class="constellation c2">
-        <svg viewBox="0 0 150 110">
-          <polyline points="14,85 50,70 82,78 118,45 138,70" fill="none" stroke="#15325c" stroke-width="1"/>
-          <circle cx="14" cy="85" r="4" fill="#111"/><circle cx="50" cy="70" r="4" fill="#111"/>
-          <circle cx="82" cy="78" r="4" fill="#111"/><circle cx="118" cy="45" r="4" fill="#111"/><circle cx="138" cy="70" r="4" fill="#111"/>
-        </svg>
-      </div>
-
-      <div class="constellation c3">
-        <svg viewBox="0 0 150 110">
-          <polyline points="20,20 55,38 80,30 108,65 135,54" fill="none" stroke="#15325c" stroke-width="1"/>
-          <circle cx="20" cy="20" r="4" fill="#111"/><circle cx="55" cy="38" r="4" fill="#111"/>
-          <circle cx="80" cy="30" r="4" fill="#111"/><circle cx="108" cy="65" r="4" fill="#111"/><circle cx="135" cy="54" r="4" fill="#111"/>
-        </svg>
-      </div>
-
-      <div class="constellation c4">
-        <svg viewBox="0 0 150 110">
-          <polyline points="15,20 38,55 70,42 98,88 126,70" fill="none" stroke="#15325c" stroke-width="1"/>
-          <circle cx="15" cy="20" r="4" fill="#111"/><circle cx="38" cy="55" r="4" fill="#111"/>
-          <circle cx="70" cy="42" r="4" fill="#111"/><circle cx="98" cy="88" r="4" fill="#111"/><circle cx="126" cy="70" r="4" fill="#111"/>
-        </svg>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
 
   <div class="popup" id="popup">
     <div class="popup-box">
       <h2>כל הכבוד!</h2>
-      <p>הכספת נפתחה.</p>
     </div>
   </div>
 
@@ -617,18 +339,17 @@
         safe.classList.add("open");
         msg.textContent = "";
 
-        setTimeout(function () {
+        setTimeout(() => {
           popup.classList.add("show");
         }, 650);
       } else {
-        msg.textContent = "הקוד לא נכון. נסו שוב.";
+        msg.textContent = "הקוד לא נכון";
+        input.value = "";
+        input.focus();
 
         safe.classList.remove("shake");
         void safe.offsetWidth;
         safe.classList.add("shake");
-
-        input.value = "";
-        input.focus();
       }
     }
 
