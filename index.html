@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>כספת החלל</title>
+  <title>כספת הכוכבים</title>
 
   <style>
     * {
@@ -13,260 +13,390 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
-      color: white;
-      overflow: hidden;
+      background: #111;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: "Arial", sans-serif;
+      color: #111;
+    }
+
+    .board {
+      position: relative;
+      width: min(1180px, 96vw);
+      aspect-ratio: 16 / 9;
       background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.95) 0 1px, transparent 2px),
-        radial-gradient(circle at 25% 76%, rgba(255,255,255,0.75) 0 1px, transparent 2px),
-        radial-gradient(circle at 72% 23%, rgba(255,255,255,0.9) 0 1px, transparent 2px),
-        radial-gradient(circle at 91% 64%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
-        radial-gradient(circle at 50% 50%, rgba(96,165,250,0.22), transparent 36%),
-        linear-gradient(135deg, #020617 0%, #0f172a 42%, #1e1b4b 72%, #111827 100%);
-      background-size: 180px 180px, 260px 260px, 230px 230px, 300px 300px, cover, cover;
+        radial-gradient(circle at 20% 30%, rgba(0,0,0,0.06) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 70% 80%, rgba(0,0,0,0.045) 0 1px, transparent 1.5px),
+        #f7f7f2;
+      background-size: 24px 24px, 31px 31px, cover;
+      border: 3px solid #111;
+      overflow: hidden;
+      box-shadow: 0 14px 50px rgba(0,0,0,0.45);
     }
 
-    .space-glow {
-      position: fixed;
-      inset: -20%;
-      background:
-        radial-gradient(circle at 30% 35%, rgba(59,130,246,0.18), transparent 22%),
-        radial-gradient(circle at 70% 65%, rgba(168,85,247,0.16), transparent 26%);
-      filter: blur(20px);
-      z-index: 0;
-    }
-
-    .planet {
-      position: fixed;
-      width: 170px;
-      height: 170px;
-      left: 8%;
-      bottom: 10%;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #fbbf24, #f97316 45%, #7c2d12);
-      box-shadow: 0 0 50px rgba(251,191,36,0.35);
-      opacity: 0.85;
-      z-index: 0;
-    }
-
-    .planet::after {
-      content: "";
+    .map-lines {
       position: absolute;
-      width: 230px;
-      height: 42px;
-      border: 8px solid rgba(255,255,255,0.26);
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-radius: 50%;
-      top: 58px;
-      left: -30px;
-      transform: rotate(-16deg);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    .card {
+    .content {
       position: relative;
       z-index: 1;
-      width: min(92vw, 470px);
-      padding: 34px 28px 30px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 30px;
-      background: rgba(15,23,42,0.58);
-      backdrop-filter: blur(18px);
-      box-shadow:
-        0 25px 80px rgba(0,0,0,0.45),
-        inset 0 1px 0 rgba(255,255,255,0.12);
+      width: 100%;
+      height: 100%;
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: clamp(34px, 7vw, 52px);
+      position: absolute;
+      top: 22px;
+      right: 42px;
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 900;
       letter-spacing: -1px;
-      text-shadow: 0 0 22px rgba(147,197,253,0.9);
     }
 
-    .subtitle {
-      margin: 0 0 26px;
-      color: #cbd5e1;
-      font-size: 17px;
+    .intro {
+      position: absolute;
+      top: 82px;
+      right: 42px;
+      width: 390px;
+      font-size: 16px;
+      line-height: 1.45;
+      text-align: right;
+    }
+
+    .planet-row {
+      position: absolute;
+      top: 175px;
+      right: 48px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      direction: rtl;
+    }
+
+    .planet-box {
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .planet {
+      width: 58px;
+      height: 58px;
+      border: 2px solid #111;
+      border-radius: 50%;
+      position: relative;
+      margin-bottom: 5px;
+      background:
+        repeating-radial-gradient(circle at 30% 35%, transparent 0 6px, rgba(0,0,0,0.18) 7px 8px),
+        #f7f7f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    .planet.saturn::after {
+      content: "";
+      position: absolute;
+      width: 84px;
+      height: 22px;
+      border: 2px solid #111;
+      border-radius: 50%;
+      transform: rotate(-18deg);
+      background: transparent;
+    }
+
+    .dash-code {
+      position: absolute;
+      top: 287px;
+      right: 90px;
+      display: flex;
+      gap: 16px;
+      direction: ltr;
+    }
+
+    .dash-code span {
+      width: 52px;
+      border-bottom: 3px solid #111;
+      height: 18px;
+    }
+
+    .safe-zone {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -38%);
+      text-align: center;
+      width: 330px;
+    }
+
+    .safe-title {
+      font-weight: 900;
+      font-size: 20px;
+      margin-bottom: 12px;
     }
 
     .safe {
-      width: 280px;
-      height: 280px;
-      margin: 0 auto 25px;
+      width: 215px;
+      height: 215px;
+      margin: 0 auto 18px;
       position: relative;
-      perspective: 1000px;
+      perspective: 900px;
+      filter: drop-shadow(0 10px 8px rgba(0,0,0,0.14));
     }
 
     .safe-body {
       width: 100%;
       height: 100%;
-      position: relative;
-      border-radius: 34px;
+      border: 4px solid #111;
+      border-radius: 18px;
       background:
-        linear-gradient(145deg, #a1a1aa 0%, #52525b 32%, #18181b 100%);
-      border: 10px solid #d4d4d8;
-      box-shadow:
-        0 0 44px rgba(96,165,250,0.72),
-        0 22px 45px rgba(0,0,0,0.35),
-        inset 0 0 28px rgba(0,0,0,0.8);
+        linear-gradient(135deg, transparent 0 47%, rgba(0,0,0,0.08) 48% 52%, transparent 53%),
+        #f7f7f2;
+      position: relative;
     }
 
     .inside {
       position: absolute;
-      inset: 39px;
-      border-radius: 22px;
-      background:
-        radial-gradient(circle, #fef3c7 0%, #facc15 36%, #f59e0b 72%, #92400e 100%);
+      inset: 28px;
+      border: 3px dashed #111;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 58px;
+      font-size: 46px;
       z-index: 1;
-      box-shadow:
-        inset 0 0 35px rgba(0,0,0,0.62),
-        0 0 30px rgba(250,204,21,0.35);
     }
 
     .door {
       position: absolute;
-      inset: 18px;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 35% 30%, #71717a, #27272a 58%, #09090b 100%);
-      border: 7px solid #e4e4e7;
+      inset: 17px;
+      border: 4px solid #111;
+      border-radius: 13px;
+      background: #f7f7f2;
       transform-origin: left center;
-      transition: transform 1s cubic-bezier(.2,.9,.2,1);
+      transition: transform 0.9s cubic-bezier(.2,.9,.2,1);
       z-index: 2;
-      box-shadow:
-        inset 0 0 22px rgba(255,255,255,0.08),
-        inset 0 0 35px rgba(0,0,0,0.85);
     }
 
     .safe.open .door {
-      transform: rotateY(-118deg);
+      transform: rotateY(-116deg);
     }
 
     .handle {
-      width: 84px;
-      height: 84px;
-      border: 11px solid #f4f4f5;
-      border-radius: 50%;
       position: absolute;
-      top: 72px;
-      left: 72px;
-      box-shadow:
-        inset 0 0 15px #000,
-        0 0 18px rgba(255,255,255,0.25);
+      width: 72px;
+      height: 72px;
+      border: 5px solid #111;
+      border-radius: 50%;
+      top: 52px;
+      left: 52px;
     }
 
     .handle::before,
     .handle::after {
       content: "";
       position: absolute;
-      background: #f4f4f5;
+      background: #111;
       border-radius: 999px;
-      box-shadow: 0 0 10px rgba(255,255,255,0.25);
     }
 
     .handle::before {
-      width: 105px;
-      height: 11px;
-      top: 25px;
-      left: -22px;
+      width: 92px;
+      height: 5px;
+      top: 29px;
+      left: -15px;
     }
 
     .handle::after {
-      width: 11px;
-      height: 105px;
-      top: -22px;
-      left: 25px;
+      width: 5px;
+      height: 92px;
+      top: -15px;
+      left: 29px;
     }
 
     .panel {
       display: flex;
-      gap: 12px;
       justify-content: center;
+      gap: 10px;
+      direction: ltr;
       align-items: center;
-      flex-wrap: wrap;
-      margin-top: 6px;
     }
 
     input {
-      width: 158px;
-      height: 58px;
-      padding: 10px 13px;
-      font-size: 30px;
-      text-align: center;
+      width: 142px;
+      height: 50px;
+      border: 2px solid #111;
+      background: #f7f7f2;
+      border-radius: 0;
+      font-size: 28px;
       letter-spacing: 8px;
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 16px;
+      text-align: center;
       outline: none;
-      color: #e0f2fe;
-      background: rgba(2,6,23,0.72);
-      box-shadow: inset 0 0 18px rgba(0,0,0,0.52);
+      font-weight: 900;
+      font-family: "Courier New", monospace;
     }
 
     input:focus {
-      border-color: #93c5fd;
-      box-shadow:
-        0 0 0 4px rgba(147,197,253,0.16),
-        inset 0 0 18px rgba(0,0,0,0.52);
+      box-shadow: 4px 4px 0 #111;
     }
 
     button {
-      height: 58px;
-      padding: 0 24px;
-      font-size: 20px;
-      font-weight: 800;
-      border: 0;
-      border-radius: 16px;
+      height: 50px;
+      padding: 0 20px;
+      background: #111;
+      color: #f7f7f2;
+      border: 2px solid #111;
+      font-size: 18px;
+      font-weight: 900;
       cursor: pointer;
-      color: #111827;
-      background: linear-gradient(135deg, #fde047, #f59e0b);
-      box-shadow:
-        0 0 22px rgba(250,204,21,0.45),
-        0 10px 20px rgba(0,0,0,0.25);
-      transition: transform 0.15s ease, filter 0.15s ease;
     }
 
     button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
+      background: #f7f7f2;
+      color: #111;
     }
 
     .msg {
-      height: 28px;
-      margin-top: 16px;
-      font-size: 19px;
-      font-weight: bold;
-      color: #fca5a5;
+      height: 24px;
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: 900;
     }
 
+    .note {
+      position: absolute;
+      width: 210px;
+      font-size: 15px;
+      line-height: 1.35;
+      text-align: center;
+      transform-origin: center;
+    }
+
+    .note::before,
+    .note::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: #111;
+      margin: 8px 0;
+    }
+
+    .note.one {
+      top: 95px;
+      left: 130px;
+      transform: rotate(-13deg);
+    }
+
+    .note.two {
+      bottom: 120px;
+      left: 85px;
+      transform: rotate(11deg);
+    }
+
+    .note.three {
+      bottom: 96px;
+      right: 305px;
+      transform: rotate(-5deg);
+      width: 250px;
+    }
+
+    .note.four {
+      top: 330px;
+      right: 70px;
+      width: 320px;
+      transform: rotate(0deg);
+      text-align: right;
+    }
+
+    .tiny-label {
+      position: absolute;
+      font-size: 13px;
+      font-weight: 700;
+      transform: rotate(-90deg);
+      opacity: 0.9;
+    }
+
+    .tiny-label.a {
+      left: 35px;
+      top: 280px;
+    }
+
+    .tiny-label.b {
+      right: 500px;
+      top: 95px;
+      transform: rotate(8deg);
+    }
+
+    .paper {
+      position: absolute;
+      right: 145px;
+      bottom: 54px;
+      width: 145px;
+      height: 170px;
+      background: #f7f7f2;
+      border: 1px solid #111;
+      transform: rotate(13deg);
+      box-shadow: 18px 18px 28px rgba(0,0,0,0.22);
+      padding: 18px 12px;
+      font-size: 13px;
+    }
+
+    .paper table {
+      width: 100%;
+      border-collapse: collapse;
+      direction: ltr;
+    }
+
+    .paper td {
+      border: 1px solid #111;
+      height: 28px;
+      text-align: center;
+    }
+
+    .constellation {
+      position: absolute;
+      width: 150px;
+      height: 110px;
+    }
+
+    .constellation svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .c1 { left: 20px; top: 18px; }
+    .c2 { left: 185px; bottom: 75px; transform: rotate(8deg); }
+    .c3 { right: 18px; bottom: 120px; transform: rotate(-14deg); }
+    .c4 { left: 690px; bottom: 225px; transform: rotate(26deg); }
+
     .shake {
-      animation: shake 0.35s ease;
+      animation: shake 0.33s ease;
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(8px); }
-      50% { transform: translateX(-8px); }
-      75% { transform: translateX(5px); }
+      25% { transform: translateX(7px); }
+      50% { transform: translateX(-7px); }
+      75% { transform: translateX(4px); }
     }
 
     .popup {
       position: fixed;
       inset: 0;
-      z-index: 5;
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(2,6,23,0.72);
-      backdrop-filter: blur(8px);
+      z-index: 10;
+      background: rgba(0,0,0,0.48);
     }
 
     .popup.show {
@@ -274,66 +404,201 @@
     }
 
     .popup-box {
-      width: min(88vw, 390px);
+      background: #f7f7f2;
+      border: 3px solid #111;
+      width: min(380px, 88vw);
       padding: 34px 26px;
       text-align: center;
-      border-radius: 28px;
-      background: linear-gradient(145deg, #fff7ed, #fde68a);
-      color: #111827;
-      box-shadow: 0 25px 90px rgba(0,0,0,0.45);
-      animation: pop 0.35s ease;
-    }
-
-    .popup-box .big {
-      font-size: 56px;
-      margin-bottom: 8px;
+      box-shadow: 12px 12px 0 #111;
+      animation: pop 0.25s ease;
     }
 
     .popup-box h2 {
       margin: 0;
-      font-size: 38px;
+      font-size: 46px;
     }
 
     .popup-box p {
-      margin: 10px 0 0;
-      font-size: 18px;
+      margin: 12px 0 0;
+      font-size: 20px;
+      font-weight: 700;
     }
 
     @keyframes pop {
-      from { transform: scale(0.86); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from { transform: scale(0.88) rotate(-2deg); opacity: 0; }
+      to { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    @media (max-width: 800px) {
+      body {
+        align-items: flex-start;
+        background: #f7f7f2;
+      }
+
+      .board {
+        width: 100vw;
+        min-height: 100vh;
+        aspect-ratio: auto;
+        border: none;
+      }
+
+      h1 {
+        right: 22px;
+        top: 18px;
+      }
+
+      .intro {
+        right: 22px;
+        top: 70px;
+        width: calc(100% - 44px);
+      }
+
+      .planet-row,
+      .dash-code,
+      .note,
+      .paper,
+      .tiny-label,
+      .constellation {
+        display: none;
+      }
+
+      .safe-zone {
+        top: 58%;
+        width: 92%;
+      }
+
+      .safe {
+        width: 230px;
+        height: 230px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="space-glow"></div>
-  <div class="planet"></div>
+  <main class="board">
+    <svg class="map-lines" viewBox="0 0 1180 664" preserveAspectRatio="none">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+          <polygon points="0 0, 8 3.5, 0 7" fill="#111"></polygon>
+        </marker>
+      </defs>
 
-  <main class="card">
-    <h1>כספת החלל</h1>
-    <p class="subtitle">הכניסו קוד בן 4 ספרות כדי לפתוח את הכספת</p>
+      <path d="M80 500 C120 420, 160 420, 185 345 S250 250, 320 270" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M245 95 C330 60, 415 52, 505 70" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M720 85 C840 100, 780 205, 695 190 S590 200, 570 260" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M820 365 C900 335, 960 375, 910 450" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M405 555 C520 515, 575 565, 680 515" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M1010 510 C965 520, 930 545, 895 590" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M545 398 C600 415, 620 455, 610 505" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+      <path d="M330 430 C290 455, 265 485, 270 530" stroke="#111" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+    </svg>
 
-    <div class="safe" id="safe">
-      <div class="safe-body">
-        <div class="inside">⭐</div>
-        <div class="door">
-          <div class="handle"></div>
-        </div>
+    <section class="content">
+      <h1>התחל כאן</h1>
+
+      <p class="intro">
+        אחרי רגע מתחת לכוכבים, מצאו את ארבע הספרות הנכונות.
+        הזינו אותן בכספת. אם הקוד מדויק — הדלת תיפתח.
+      </p>
+
+      <div class="planet-row">
+        <div class="planet-box"><div class="planet">ח</div><span>ארץ</span></div>
+        <div class="planet-box"><div class="planet">מ</div><span>מאדים</span></div>
+        <div class="planet-box"><div class="planet">נ</div><span>נוגה</span></div>
+        <div class="planet-box"><div class="planet saturn">ש</div><span>שבתאי</span></div>
       </div>
-    </div>
 
-    <div class="panel">
-      <input id="codeInput" type="password" maxlength="4" inputmode="numeric" placeholder="----">
-      <button onclick="checkCode()">פתח</button>
-    </div>
+      <div class="dash-code">
+        <span></span><span></span><span></span><span></span>
+      </div>
 
-    <div class="msg" id="msg"></div>
+      <div class="safe-zone">
+        <div class="safe-title">כספת המשימה</div>
+
+        <div class="safe" id="safe">
+          <div class="safe-body">
+            <div class="inside">★</div>
+            <div class="door">
+              <div class="handle"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <input id="codeInput" type="text" maxlength="4" inputmode="numeric" placeholder="----">
+          <button onclick="checkCode()">פתח</button>
+        </div>
+
+        <div class="msg" id="msg"></div>
+      </div>
+
+      <div class="note one">
+        קווים מחברים בין נקודות. לפעמים גם בין רעיונות.
+        אל תאמינו לכל חץ — אבל שימו לב לכיוון.
+      </div>
+
+      <div class="note two">
+        כוכב הלכת שנמצא במקום ה־7 מהשמש אינו הקוד, אבל הוא רמז טוב להתחלה.
+      </div>
+
+      <div class="note three">
+        אם בטבלה הופיע גם כוכב הלכת המסתורי — מה המספר שהיה מופיע לידו?
+      </div>
+
+      <div class="note four">
+        אחרי שאיתרתם את ארבע הספרות, הזינו אותן כאן.
+        הכספת תיפתח רק אם הסדר נכון.
+      </div>
+
+      <div class="tiny-label a">לא כל נקודה היא התחלה</div>
+      <div class="tiny-label b">מסלול הכוכבים משתנה, הקוד נשאר</div>
+
+      <div class="paper">
+        <table>
+          <tr><td>7</td><td>אורנוס</td></tr>
+          <tr><td>8</td><td>נפטון</td></tr>
+          <tr><td>7</td><td>רמז</td></tr>
+          <tr><td>3</td><td>סיום</td></tr>
+        </table>
+      </div>
+
+      <div class="constellation c1">
+        <svg viewBox="0 0 150 110">
+          <polyline points="10,20 42,10 82,32 125,18" fill="none" stroke="#15325c" stroke-width="1"/>
+          <circle cx="10" cy="20" r="4" fill="#111"/><circle cx="42" cy="10" r="4" fill="#111"/>
+          <circle cx="82" cy="32" r="4" fill="#111"/><circle cx="125" cy="18" r="4" fill="#111"/>
+        </svg>
+      </div>
+
+      <div class="constellation c2">
+        <svg viewBox="0 0 150 110">
+          <polyline points="14,85 50,70 82,78 118,45 138,70" fill="none" stroke="#15325c" stroke-width="1"/>
+          <circle cx="14" cy="85" r="4" fill="#111"/><circle cx="50" cy="70" r="4" fill="#111"/>
+          <circle cx="82" cy="78" r="4" fill="#111"/><circle cx="118" cy="45" r="4" fill="#111"/><circle cx="138" cy="70" r="4" fill="#111"/>
+        </svg>
+      </div>
+
+      <div class="constellation c3">
+        <svg viewBox="0 0 150 110">
+          <polyline points="20,20 55,38 80,30 108,65 135,54" fill="none" stroke="#15325c" stroke-width="1"/>
+          <circle cx="20" cy="20" r="4" fill="#111"/><circle cx="55" cy="38" r="4" fill="#111"/>
+          <circle cx="80" cy="30" r="4" fill="#111"/><circle cx="108" cy="65" r="4" fill="#111"/><circle cx="135" cy="54" r="4" fill="#111"/>
+        </svg>
+      </div>
+
+      <div class="constellation c4">
+        <svg viewBox="0 0 150 110">
+          <polyline points="15,20 38,55 70,42 98,88 126,70" fill="none" stroke="#15325c" stroke-width="1"/>
+          <circle cx="15" cy="20" r="4" fill="#111"/><circle cx="38" cy="55" r="4" fill="#111"/>
+          <circle cx="70" cy="42" r="4" fill="#111"/><circle cx="98" cy="88" r="4" fill="#111"/><circle cx="126" cy="70" r="4" fill="#111"/>
+        </svg>
+      </div>
+    </section>
   </main>
 
   <div class="popup" id="popup">
     <div class="popup-box">
-      <div class="big">🚀</div>
       <h2>כל הכבוד!</h2>
       <p>הכספת נפתחה.</p>
     </div>
@@ -357,12 +622,13 @@
         }, 650);
       } else {
         msg.textContent = "הקוד לא נכון. נסו שוב.";
-        input.value = "";
-        input.focus();
 
         safe.classList.remove("shake");
         void safe.offsetWidth;
         safe.classList.add("shake");
+
+        input.value = "";
+        input.focus();
       }
     }
 
